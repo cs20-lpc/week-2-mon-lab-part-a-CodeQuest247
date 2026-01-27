@@ -1,6 +1,7 @@
 #include <cstddef>
 #include <iostream>
 #include <string>
+#include <limits>
 
 using namespace std;
 
@@ -35,13 +36,18 @@ int main() {
         cin >> userSize;
     } while (userSize > 10);
 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     // TODO: create the dynamic memory
+    dynArr = new string[userSize]; 
 
     // call the functions
     populate(dynArr, userSize);
     printFoods(dynArr, userSize);
 
     // TODO: release the dynamic memory to avoid a memory leak
+    delete[] dynArr; 
+    dynArr = nullptr; 
 
     // terminate
     return 0;
@@ -61,7 +67,10 @@ int main() {
 *******************************************************************************/
 
 void populate(string* arrPtr, const unsigned ARR_SIZE) {
-    // TODO
+    for (unsigned i = 0; i < ARR_SIZE; ++i) {
+        cout << "\nEnter food order #" << (i + 1) << ": "; 
+        getline(cin, arrPtr[i]); // sotres the input into the i-th element 
+    }
 }
 
 /*******************************************************************************
@@ -79,5 +88,15 @@ void populate(string* arrPtr, const unsigned ARR_SIZE) {
 *******************************************************************************/
 
 void printFoods(string* arrPtr, const unsigned ARR_SIZE) {
-    // TODO
+    cout << endl; // space between last input and first list 
+    for (unsigned i = 0; i < ARR_SIZE; ++i) {
+        cout << "****************************************" << endl; 
+        cout << "Food Order #" << (i + 1) << endl; 
+        cout << arrPtr[i] << endl; 
+        cout << "(sent from address " 
+             << static_cast<const void*>(&arrPtr[i]) 
+             << ")" << endl; 
+        cout << "****************************************" << endl;
+        cout << endl; 
+    }
 }
