@@ -1,4 +1,4 @@
-#include <cstddef> // 
+#include <cstddef> // Aditi Menon
 #include <iostream>
 #include <string>
 #include <limits> // for clearing input buffer after cin
@@ -8,9 +8,10 @@ using namespace std;
 /*******************************************************************************
  * Function prototypes
 *******************************************************************************/
+//Functions prototypes declares the functions and their parameters 
 
-void populate(string*, const unsigned);
-void printFoods(string*, const unsigned);
+void populate(string*, const unsigned); // string* parameter allows the function to access the dynamic array created in main 
+void printFoods(string*, const unsigned); // const unsigned represents the array size and is marked const to prevent any changes to it inside the function
 
 /*******************************************************************************
  * Description:
@@ -26,7 +27,7 @@ void printFoods(string*, const unsigned);
 
 int main() {
     // variables
-    string*  dynArr   = nullptr; // Pointer that will later point to a dynamically alloacted array of strings
+    string*  dynArr   = nullptr; // dynArr is a pointer that will later point to a dynamically alloacted array of strings
     unsigned userSize = 0; // Stores the size of the array chosen by the user 
 
     // get the size for the array from user
@@ -39,7 +40,7 @@ int main() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears the leftover newline so that getline can work properly... mixing cin and getline without this would make the program skip the first input line
 
     // TODO: create the dynamic memory
-    dynArr = new string[userSize];// assigns dynArr to point to the first element of the array which the user inputted 
+    dynArr = new string[userSize];// assigns dynArr to point to the first element of the array which the user inputs
 
     // call the functions
     populate(dynArr, userSize); // Fills the array with the user's input
@@ -71,11 +72,12 @@ int main() {
 // ARR_SIZE represents how many elements the array contains 
 void populate(string* arrPtr, const unsigned ARR_SIZE) {
     for (unsigned i = 0; i < ARR_SIZE; ++i) { // Loops through each position in the array 
-        cout << "\nEnter food order #" << (i + 1) << ": "; // (i + 1) is used so the output starts counting from 1 instead of 0
-        getline(cin, arrPtr[i]); // uses array indexing to access elements in the array 
+        cout << "\nEnter food order #" << (i + 1) << ": "; // asks user to input food item, and (i + 1) is used to make sure the food order number starts from 1 instead of 0
+        getline(cin, arrPtr[i]); // arrPtr[i] accesses the string element at index i of the array, and getline stores the user's input into that specific position of the array. 
     }
 }
 
+// The populate function prints prompts to guide the user while entering data, while the printFoods function displays the stored data after the array has been filled.
 /*******************************************************************************
  * Description:
  * Displays the information stored in the array pointed to by `arrPtr`. Also
@@ -90,16 +92,16 @@ void populate(string* arrPtr, const unsigned ARR_SIZE) {
  * N/A
 *******************************************************************************/
 
-// This function print each food order stored in the dynamic array 
+// This function prints each food order stored in the dynamic array 
 // and print the memory address where each element is stored 
 void printFoods(string* arrPtr, const unsigned ARR_SIZE) {
     cout << endl; // space between last input and first list 
     for (unsigned i = 0; i < ARR_SIZE; ++i) { // loops through each element in the array
         cout << "****************************************" << endl; 
         cout << "Food Order #" << (i + 1) << endl; // It first prints the food order number starting from 1 
-        cout << arrPtr[i] << endl; // Prints the food order stored at the i-th position in the array (array-indexing)
+        cout << arrPtr[i] << endl; // Prints the food order stored at index i of the array 
         cout << "(sent from address " 
-             << static_cast<const void*>(&arrPtr[i]) // static_cast makes sure the exact location in memory is printed 
+             << static_cast<const void*>(&arrPtr[i]) // static_cast makes sure the exact location in memory is printed for each element 
              << ")" << endl; 
         cout << "****************************************" << endl;
         cout << endl; 
